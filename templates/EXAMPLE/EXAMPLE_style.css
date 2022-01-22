@@ -1,0 +1,103 @@
+/*
+	CSS für Beispieltemplate
+	Scoutnet-Kalender
+	20120323 b.stromberg@data-systems.de
+	
+	- Die Klasse "events" ist im Widget eingestellt.
+	- Dieses CSS einfach an deine style.css anfuegen
+*/
+
+
+/* ----- Scoutnet-Kalender Widget */
+
+div.events {
+	display: block;
+	margin: 0 0 0 2px;
+	padding: 2px 0 0 6px;
+	border: 1px solid #eaeaea;
+	/* IE<=9 Fallback */ background-color: #F1F1F1;
+	background: -moz-linear-gradient(top,  #F1F1F1, #F5F5F5);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(#F1F1F1), color-stop(#F5F5F5));
+	background: -webkit-linear-gradient(top,  #F1F1F1,#F5F5F5);
+	background: -o-linear-gradient(top,  #F1F1F1,#F5F5F5);
+	background: -ms-linear-gradient(top,  #F1F1F1,#F5F5F5);
+	background: linear-gradient(top,  #F1F1F1,#F5F5F5);
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	}
+	
+div.events > div {
+	margin: 5px 0 10px 0;
+	}
+
+div.events a {
+	color: black;
+	}
+
+div.events a:hover {
+	text-decoration: underline;
+	}
+
+div.date-container {
+	background-color: white;
+	border: 1px solid #bebebe;
+	float: left;
+	height: 30px;
+	width: 30px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	text-align: center;
+	padding: 4px 0 0 0;
+	line-height: 13px;
+	}
+
+	div.date-container span.day {
+		font-weight: bold;
+		font-size: 14px;
+		display: block;
+		}
+	
+	div.date-container span.month {
+		font-size: 13px;
+		color: #808080;
+		}
+
+div.info-container {
+	font-size: 13px;
+	float: left;
+	min-height: 30px;
+	min-width: 200px;
+	margin-left: 10px;
+	}
+
+	#sidebar div.info-container {
+		max-width: 212px;
+	}
+
+	div.info-container span.event-title {
+		}
+	
+	div.info-container span.event-descr {
+		display: block;
+		font-size: 12px;
+		}
+
+
+/* ----- Scoutnet-Kalender Seiten-Inlineanzeige */
+
+div.info-container h2,
+div.info-container h3 {
+	margin: 0;
+	padding: 0;
+	}
+
+div.info-container p {
+	padding: 0 15px 10px 0;
+	max-width: 580px;
+	}
+
+div.info-container small {
+	padding: 0;
+	}
