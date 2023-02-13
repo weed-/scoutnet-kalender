@@ -3,7 +3,7 @@
   Plugin Name: Scoutnet Kalender
   Plugin URI: http://www.dpsg-paderborn.de/drin/2012/05/endlich-das-scoutnet-kalender-wordpress-plugin/
   Description: Zeigt Termine und Details aus dem Scoutnet-Kalender in Seiten, Artikeln und einem Widget an.
-  Version: 1.1.3
+  Version: 1.3
   Author: Scoutnet und Bj&ouml;rn Stromberg
   Author URI: http://www.scoutnet.de/
   Text Domain: scoutnet_kalender
@@ -101,7 +101,6 @@ class ScoutnetKalenderWidget extends WP_Widget {
     function __construct() {
 
         $widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
-//        $this->WP_Widget('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
         parent::__construct( 'ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops );
 
         // AJAX actions
@@ -111,19 +110,6 @@ class ScoutnetKalenderWidget extends WP_Widget {
         add_action( 'wp_ajax_nopriv_SNK_ajax-submit', array(&$this, 'ajax_widget'));
         add_action( 'wp_ajax_SNK_ajax-submit', array(&$this, 'ajax_widget'));
     }
-
-	// aka __construct
-//    function ScoutnetKalenderWidget() {
-//        $widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
-//        $this->WP_Widget('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
-//
-//		// AJAX actions
-//		// if both logged in and not logged in users can send this AJAX request,
-//		// add both of these actions, otherwise add only the appropriate one
-//		// thanks to http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
-//		add_action( 'wp_ajax_nopriv_SNK_ajax-submit', array(&$this, 'ajax_widget'));
-//		add_action( 'wp_ajax_SNK_ajax-submit', array(&$this, 'ajax_widget'));
-//    }
 
     function form($instance) {
         $instance = wp_parse_args((array) $instance, array('title' => '', 'ssid' => '3', 'elementcount'=>'0', 'wrapclassname'=>'snk_widget', 'externalTemplateName'=>''));
@@ -154,7 +140,7 @@ class ScoutnetKalenderWidget extends WP_Widget {
     }
 
     function widget($args, $instance, $ajaxcall = false) {
-    	// alle �bergebenen Variablen verarbeiten
+    	// Variablen verarbeiten
         extract($args, EXTR_SKIP);
 		$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 		$ssid = (empty($instance['ssid']) || !preg_match('/^[0-9]+$/', $instance['ssid'])) ? '3' : $instance['ssid'];

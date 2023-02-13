@@ -43,12 +43,12 @@ foreach($events as $event) { /* @var $event SN_Model_Event */
 		<div class="info-container">	
 			<?php // Titel mit Link
 			if (trim($event->URL)=="") {
-				echo "<h3>".$event->Title."</h3>";
+				echo "<h3>".htmlspecialchars($event->Title)."</h3>";
 				} else {
-				echo "<h3><a href=".$event->URL.">".$event->Title."</a></h3>";
+				echo "<h3><a href=".$event->URL.">".htmlspecialchars($event->Title)."</a></h3>";
 				} ?>
 			<?php // Beschreibung
-			if (trim($event->Description)!="") { echo "<p>" . $event->Description . "</p>"; } ?>
+			if (trim($event->Description)!="") { echo "<p>" . htmlspecialchars($event->Description) . "</p>"; } ?>
 			<small>
 				<?php
 				// Ort mit PLZ
@@ -66,7 +66,7 @@ foreach($events as $event) { /* @var $event SN_Model_Event */
 
 				// Link
 				if (trim($event->URL)!="") {
-					echo "Link: <a title=\"" . $event->Title . " (" . $event->URL . ")" . "\" href=" . $event->URL . ">";
+					echo "Link: <a title=\"" . htmlspecialchars($event->Title) . " (" . $event->URL . ")" . "\" href=" . $event->URL . ">";
 					short_url($event->URL, 100);
 					echo "</a><br />";
 				}

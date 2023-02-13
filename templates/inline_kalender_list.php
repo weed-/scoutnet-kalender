@@ -8,12 +8,6 @@
 		<?php echo $event->Title; ?>
 		<?php echo $event->Author->get_full_name(); ?>
 		<?php var_dump($event); ?>
-
-
-	ACHTUNG!
-		Dieses Template bindet auch Remote-HTML-Code ein, wenn das
-		jemand in den Kalender eingetragen hat.
-
 */ 
 
 // Deutsche Zeit
@@ -21,7 +15,7 @@ date_default_timezone_set('Europe/Berlin');
 
 foreach($events as $event) { /* @var $event SN_Model_Event */
 ?>
-	<h2><?php echo date('d.m.Y', $event->Start); ?></span>: <?php echo $event->Title; ?></h2>
+	<h2><?php echo date('d.m.Y', $event->Start); ?></span>: <?php echo htmlspecialchars($event->Title); ?></h2>
 	
 	<p>
 		<?php echo $event->Description; ?>

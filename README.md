@@ -2,45 +2,39 @@
 
 Ein WordPress-Plugin, das Termine aus dem [Scoutnet-Kalender](https://www.scoutnet.de/kalender/start) anzeigt.
 
-Scoutnet bietet allen deutschen RDP-Pfadfinderverbänden (DPSG, BDP, PSG, BMPPD, VCP) ein zentrales und hirarchisches Kalender-System an. Die Nutzung ist natürlich freiwillig, aber überaus praktisch. Scoutnet-Termine lassen sich, beispielsweise, in allen Apps anzeigen und verwalten (Outlook, Thunderbird, Android, iOS, ...).
+Scoutnet bietet den deutschen RDP-Pfadfinderverbänden (DPSG, BDP, PSG, BMPPD, VCP) ein zentrales und hirarchisches Kalender-System an. Die Nutzung ist natürlich freiwillig, aber überaus praktisch. Scoutnet-Termine lassen sich, beispielsweise, in allen Apps anzeigen und verwalten (Outlook, Thunderbird, Android, iOS, ...).
 
-Dieses Plugin ermöglich schnell und einfach die Darstellung von Scoutnet-Terminen sowie deren Details innerhalb von WordPress Seiten, Beiträgen oder Sidebar(s). Mit einfachen Shortcodes können die Daten angezeigt werden. Außerdem kann man die Ausgabe mit eigenen Templates formatieren. Alle Ansichten bringen kommentierte Vorlagen mit. Es sind keine iFrames, iCAL-Exporte, oder umständliche Datenkonverteierung notwendig, alle Daten werden in Echzeit (verschlüsselt) von der Scoutnet API geladen.
-
-⚠ **Achtung**: Das Default-Template bettet auch HTML-Code aus dem Scoutnet ein ("Remote Code"), sofern dort welcher liegt. Das ist so, weil manche Vereine den Kalender zur Ablage von Statusinformationen ("gebucht" oder "frei") nutzen. Die Änderung des Verhaltens würde das "standartmäßig" nicht erlauben. Daher bindet ausschliesslich vertrauenswuerdige Kalender ein!
-
-Das ist auch der Grund warum das Plugin nicht mehr im WordPress-Repository zu finden ist. Wer das "default" Template dahingehend anpassen möchte, ich herzlich gerne eingeladen. Ich freue mich über Pull-Requests oder eine E-Mail (oder auf dem Moment wo ich Zeit habe das zu überarbeiten) 🙂
+Dieses Plugin ermöglicht die Darstellung von Scoutnet-Terminen innerhalb von WordPress Seiten und Beiträgen. Mit Shortcodes können verschiedene Daten angezeigt werden und man kann die Ausgabe mit eigenen Templates formatieren. Alle Ansichten bringen kommentierte Vorlagen mit. Es sind keine iFrames, iCAL-Exporte, oder umständliche Datenkonverteierung notwendig, alle Daten werden in Echzeit von der Scoutnet API geladen.
 
 Ursprünglich gebaut und angepasst von: muetze, derweed, lordq, okay75
 
 
 # Features
-* Gut kommentierte Beispiel-Vorlagen
-* Templates zur einfachen Layoutanpassung
-* Es koennen beliebige Daten eines Termins angezeigt werden
-* Widget-Template mit asynchroner Aktualisierung
+
 * Verbandsunabhängig (VCP/DPSG/BDP/BMPPD/PSG)
+* Templates zur einfachen Anpassung
+* Beliebige Daten eines Termins können angezeigt werden
+* Widget mit asynchroner Aktualisierung
 * API-Proxy in Einstellungen konfigurierbar
   * Für Plastikhoster die kein ausgehendes SSL erlauben (thx Andre)
-* Einbindung mehrerer Kalender
 
 
 #  Installation
+
 1. Den Ordner "scoutnet-kalender" mit allen Dateien in das Pluginverzeichnis (/wp-content/plugins/) hochladen
 2. Das Plugin im WordPress-Dashboard unter Plugins -> "Scoutnet Kalender" aktivieren
 
-- Das Widget kannst du dann sofort unter Design->Widgets in dein Theme einbinden.
-- Fuer Seiten und Artikel mit Terminen darauf gibt es einen Shortcode
+- Das Widget kannst du dann sofort unter Design->Widgets in dein Theme einbinden, wenn dein Theme Widgets unterstützt
+- Für Seiten und Beiträge gibt es einen Shortcode
 - Unter 'Einstellungen' kannst du Standartwerte vorgeben und die Shortcodes nachschlagen.
 
 
 # Frequently Asked Questions
 
 - Warum ist das Plugin nicht mehr im WordPress Repository?
-  - Weil es Daten und HTML-Code vom Scoutnet einbindet und das ein potentieller Sicherheitsrisiko ist
-- Kann ich es trotzdem verwenden?
-  - Ja, aber binde nur vertrauenswürdige Kalender ein
+  - Weil es früher ungeprüft HTML vom Scoutnet-Server eingebunden hat
 - Das Plugin funktioniert bei meinem Hoster nicht
-  - Hostingangebote von Strato, 1blu, 1und1, Unitedinternet und andere (schrzhaft "Plastikhoster" genannt) unterbinden gerne ausgehende Verbindungen zu API-Diensten. Wechsle den Hoster (zum Beispiel zur [DATA-systems](https://www.data-systems.de) oder nutze die Proxy-Funktion in den Einstellungen.
+  - Hostingangebote von Strato, 1blu, 1und1, Unitedinternet und andere (scherzhaft "Plastikhoster" genannt) unterbinden gerne ausgehende Verbindungen zu API-Diensten. Wechsle den Hoster (zum Beispiel zur [DATA-systems](https://www.data-systems.de) oder nutze die Proxy-Funktion in den Einstellungen.
 - Kalender-ID?!?
   - Jeder Kalender hat eine numerische ID. Mehr Informationen unter: http://www.scoutnet.de/kalender/kurzanleitung.html
 - Kann ich mir das Plugin Live ansehen?
@@ -53,8 +47,6 @@ Ursprünglich gebaut und angepasst von: muetze, derweed, lordq, okay75
 
 # Eigenes Template für custom HTML/CSS
 
-Diese Anleitung gilt fuer die Inline-Anzeige und das Widget. Die Templates unterschieden sich anhand der Dateinamen.
-
 1. Kopiere dein Template `scoutnet-kalender_[inline|widget]_kalender_EXAMPLE_list.php` von scoutnet-kalender/templates/ in dein Theme-Verzeichnis
 2. Benenne das Template um, z.B. `scoutnet-kalender_inline_kalender_STAMMTEETRINKER_list.php`
 3. Trage `STAMMTEETRINKER` (passende Klein-Grosschreibung) in das Widget/Shortcode ein. Zum Beispiel `[snk elementcount="30" externalTemplateName="STAMMTEETRINKER" ssid="53" /]`
@@ -62,7 +54,9 @@ Diese Anleitung gilt fuer die Inline-Anzeige und das Widget. Die Templates unter
 
 Du kannst diese Dateien nun in deinem Theme-Ordner bearbeiten, ohne das sie bei einem Update des Plugins überschrieben werden.
 
+
 # Screenshots
+
 Die Widget-Konfiguration
 
 ![Die Widget-Konfiguration](screenshot-1.png)
@@ -73,6 +67,10 @@ Widget mit dem EXAMPLE-Template
 
 
 # Changelog
+
+= 1.3 =
+- Update für PHP 8.1/8.2
+- HTML-Escaping für remote-Content eingebaut
 
 = 1.1.2 =
 - Aktuelle Wordpress-Versionen getestet
