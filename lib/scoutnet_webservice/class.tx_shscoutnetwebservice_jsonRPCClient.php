@@ -50,6 +50,10 @@ class tx_shscoutnetwebservice_jsonRPCClient {
 	 * @var integer
 	 */
 	private $id;
+
+	private $proxy;
+
+
 	/**
 	 * If true, notifications are performed instead of requests
 	 *
@@ -141,7 +145,7 @@ class tx_shscoutnetwebservice_jsonRPCClient {
 		$this->debug && $this->debug.='***** Request *****'."\n".$request."\n".'***** End Of request *****'."\n\n";
 
 
-		if (SNK_USE_CURL) {
+		if (true) {
 			// performs the HTTP POST by use of libcurl
 			$options = array(
 				CURLOPT_URL		=> $this->url,
@@ -157,8 +161,10 @@ class tx_shscoutnetwebservice_jsonRPCClient {
 			$ch = curl_init();
 			curl_setopt_array( $ch, $options );
 
-                        
-                        if ($this->curlProxyServer != null) {
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			if ($this->curlProxyServer != null) {
 				curl_setopt($ch, CURLOPT_PROXY, $this->curlProxyServer);
 
 				if ($this->curlProxyTunnel != null)	{
@@ -203,6 +209,7 @@ class tx_shscoutnetwebservice_jsonRPCClient {
 		
 		// final checks and return
 		if (!$this->notification) {
+//			echo json_encode($response);
 			// check
 			if ($response['id'] != $currentId) {
 				throw new Exception('Incorrect response id (request id: '.$currentId.', response id: '.$response['id'].')');

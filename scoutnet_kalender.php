@@ -30,7 +30,7 @@ class ScoutnetKalender {
         add_shortcode('snk', array(&$this, 'inline_kalender'));
 
         // widget
-        add_action('widgets_init', create_function('', 'return register_widget("ScoutnetKalenderWidget");'));
+        add_action('widgets_init', function (){return register_widget("ScoutnetKalenderWidget");});
     }
 
     public function init() {
@@ -44,7 +44,11 @@ class ScoutnetKalender {
     }
 
     public function admin_menu() {
-        add_options_page("Scoutnet Kalender", "Scoutnet Kalender", 'activate_plugins', 'scoutnet-kalender/options.php');
+        add_options_page("Scoutnet Kalender", "Scoutnet Kalender", 'activate_plugins', 'scoutnet-kalender/options.php',array(&$this, 'admin_options' ));
+    }
+
+    public function admin_options(){
+        require(plugin_dir_path(__FILE__).'/options.php');
     }
 
     public function inline_kalender($attr) {
@@ -94,19 +98,32 @@ class ScoutnetKalender {
 }
 
 class ScoutnetKalenderWidget extends WP_Widget {
+    function __construct() {
+
+        $widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
+//        $this->WP_Widget('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
+        parent::__construct( 'ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops );
+
+        // AJAX actions
+        // if both logged in and not logged in users can send this AJAX request,
+        // add both of these actions, otherwise add only the appropriate one
+        // thanks to http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
+        add_action( 'wp_ajax_nopriv_SNK_ajax-submit', array(&$this, 'ajax_widget'));
+        add_action( 'wp_ajax_SNK_ajax-submit', array(&$this, 'ajax_widget'));
+    }
 
 	// aka __construct
-    function ScoutnetKalenderWidget() {
-        $widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
-        $this->WP_Widget('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
-
-		// AJAX actions
-		// if both logged in and not logged in users can send this AJAX request,
-		// add both of these actions, otherwise add only the appropriate one
-		// thanks to http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
-		add_action( 'wp_ajax_nopriv_SNK_ajax-submit', array(&$this, 'ajax_widget'));
-		add_action( 'wp_ajax_SNK_ajax-submit', array(&$this, 'ajax_widget'));
-    }
+//    function ScoutnetKalenderWidget() {
+//        $widget_ops = array('classname' => 'ScoutnetKalenderWidget', 'description' => 'Anzeige von Scoutnet-Kalendern');
+//        $this->WP_Widget('ScoutnetKalenderWidget', 'Scoutnet Kalender', $widget_ops);
+//
+//		// AJAX actions
+//		// if both logged in and not logged in users can send this AJAX request,
+//		// add both of these actions, otherwise add only the appropriate one
+//		// thanks to http://www.garyc40.com/2010/03/5-tips-for-using-ajax-in-wordpress/#js-global
+//		add_action( 'wp_ajax_nopriv_SNK_ajax-submit', array(&$this, 'ajax_widget'));
+//		add_action( 'wp_ajax_SNK_ajax-submit', array(&$this, 'ajax_widget'));
+//    }
 
     function form($instance) {
         $instance = wp_parse_args((array) $instance, array('title' => '', 'ssid' => '3', 'elementcount'=>'0', 'wrapclassname'=>'snk_widget', 'externalTemplateName'=>''));
@@ -117,11 +134,11 @@ class ScoutnetKalenderWidget extends WP_Widget {
         $externalTemplateName = $instance['externalTemplateName'];
 ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>">Titel: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /></label><br />
-            <label for="<?php echo $this->get_field_id('ssid'); ?>">Kalender-ID: <input class="widefat snk_ssid_chooser" id="<?php echo $this->get_field_id('ssid'); ?>" name="<?php echo $this->get_field_name('ssid'); ?>" type="text" value="<?php echo attribute_escape($ssid); ?>" /></label><br />
-            <label for="<?php echo $this->get_field_id('elementcount'); ?>">Element-Anzahl (0=alle): <input class="widefat snk_elementcount_chooser" id="<?php echo $this->get_field_id('elementcount'); ?>" name="<?php echo $this->get_field_name('elementcount'); ?>" type="text" value="<?php echo attribute_escape($elementcount); ?>" /></label><br />
-            <label for="<?php echo $this->get_field_id('wrapclassname'); ?>">Name der &auml;u&szlig;eren CSS-Klasse: <input class="widefat snk_wrapclassname_chooser" id="<?php echo $this->get_field_id('wrapclassname'); ?>" name="<?php echo $this->get_field_name('wrapclassname'); ?>" type="text" value="<?php echo attribute_escape($wrapclassname); ?>" /></label><br />
-            <label for="<?php echo $this->get_field_id('externalTemplateName'); ?>" title="Zusammengesetzt: TEMPLATEPATH/scoutnet-kalender_widget_kalender_%EINGABE%_event.php UND TEMPLATEPATH/scoutnet-kalender_widget_kalender_%EINGABE%_list.php">Name des Templates:</br /><input class="widefat snk_externalTemplateName_chooser" id="<?php echo $this->get_field_id('externalTemplateName'); ?>" name="<?php echo $this->get_field_name('externalTemplateName'); ?>" type="text" value="<?php echo attribute_escape($externalTemplateName); ?>" /></label>
+            <label for="<?php echo $this->get_field_id('title'); ?>">Titel: <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label><br />
+            <label for="<?php echo $this->get_field_id('ssid'); ?>">Kalender-ID: <input class="widefat snk_ssid_chooser" id="<?php echo $this->get_field_id('ssid'); ?>" name="<?php echo $this->get_field_name('ssid'); ?>" type="text" value="<?php echo esc_attr($ssid); ?>" /></label><br />
+            <label for="<?php echo $this->get_field_id('elementcount'); ?>">Element-Anzahl (0=alle): <input class="widefat snk_elementcount_chooser" id="<?php echo $this->get_field_id('elementcount'); ?>" name="<?php echo $this->get_field_name('elementcount'); ?>" type="text" value="<?php echo esc_attr($elementcount); ?>" /></label><br />
+            <label for="<?php echo $this->get_field_id('wrapclassname'); ?>">Name der &auml;u&szlig;eren CSS-Klasse: <input class="widefat snk_wrapclassname_chooser" id="<?php echo $this->get_field_id('wrapclassname'); ?>" name="<?php echo $this->get_field_name('wrapclassname'); ?>" type="text" value="<?php echo esc_attr($wrapclassname); ?>" /></label><br />
+            <label for="<?php echo $this->get_field_id('externalTemplateName'); ?>" title="Zusammengesetzt: TEMPLATEPATH/scoutnet-kalender_widget_kalender_%EINGABE%_event.php UND TEMPLATEPATH/scoutnet-kalender_widget_kalender_%EINGABE%_list.php">Name des Templates:</br /><input class="widefat snk_externalTemplateName_chooser" id="<?php echo $this->get_field_id('externalTemplateName'); ?>" name="<?php echo $this->get_field_name('externalTemplateName'); ?>" type="text" value="<?php echo esc_attr($externalTemplateName); ?>" /></label>
         </p>
 <?php
     }
