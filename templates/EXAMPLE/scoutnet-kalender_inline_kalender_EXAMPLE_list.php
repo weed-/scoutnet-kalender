@@ -54,8 +54,8 @@ foreach($events as $event) { /* @var $event SN_Model_Event */
 				// Ort mit PLZ
 				if (trim($event->Location)!="") {
 					echo "Ort: ";
-					if (trim($event->ZIP)!="") {echo $event->ZIP . " ";}
-					echo $event->Location;
+					if (trim($event->ZIP)!="") {echo htmlspecialchars($event->ZIP) . " ";}
+					echo htmlspecialchars($event->Location);
 					echo "<br />";
 				}
 
@@ -74,14 +74,14 @@ foreach($events as $event) { /* @var $event SN_Model_Event */
 				// Autor und zuletzt geaendert
 		                if (trim($event->Author->get_full_name())!="") {
 		                     if ($event->Last_Modified_At != 0) {
-						echo "Autor: " . $event->Author->get_full_name() . "(ge&auml;ndert am " . date('d.m.Y', $event->Last_Modified_At) . ")";
+						echo "Autor: " . htmlspecialchars($event->Author->get_full_name()) . "(ge&auml;ndert am " . date('d.m.Y', $event->Last_Modified_At) . ")";
 					} else {
-						echo "Autor: " . $event->Author->get_full_name() . "(ge&auml;ndert am " . date('d.m.Y',$event->Created_At) . ")";
+						echo "Autor: " . htmlspecialchars($event->Author->get_full_name()) . "(ge&auml;ndert am " . date('d.m.Y',$event->Created_At) . ")";
 					}
 				}
 
 				if (trim($event->Author->get_full_name())!="") {
-					echo "Autor: " . $event->Author->get_full_name() . "(ge&auml;ndert am " . date('d.m.Y', $event->Last_Modified_At) . ")";
+					echo "Autor: " . htmlspecialchars($event->Author->get_full_name()) . "(ge&auml;ndert am " . date('d.m.Y', $event->Last_Modified_At) . ")";
 				}
 				?>
 			</small>
