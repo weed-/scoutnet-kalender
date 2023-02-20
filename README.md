@@ -68,6 +68,9 @@ Widget mit dem EXAMPLE-Template
 
 # Changelog
 
+= 1.3.1 =
+- Die unsichere Ausgabe von HTML aus allen Feldern jetzt escaped (thx 123Haynes!)
+
 = 1.3 =
 - Update für PHP 8.1/8.2
 - HTML-Escaping für remote-Content eingebaut
