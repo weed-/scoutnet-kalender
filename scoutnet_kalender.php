@@ -3,7 +3,7 @@
   Plugin Name: Scoutnet Kalender
   Plugin URI: http://www.dpsg-paderborn.de/drin/2012/05/endlich-das-scoutnet-kalender-wordpress-plugin/
   Description: Zeigt Termine und Details aus dem Scoutnet-Kalender in Seiten, Artikeln und einem Widget an.
-  Version: 1.3.1
+  Version: 1.3.2
   Author: Scoutnet und Bj&ouml;rn Stromberg
   Author URI: http://www.scoutnet.de/
   Text Domain: scoutnet_kalender

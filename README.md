@@ -68,6 +68,9 @@ Widget mit dem EXAMPLE-Template
 
 # Changelog
 
+= 1.3.2 =
+- Fix: Kalender-IDs mit leeren Kalendern im Shortcode von Seite oder Beitrag blockierten den Editor ("Es ist ein Fehler aufgetreten"). Ergänzt um eine hilfreiche Fehlermeldung.
+
 = 1.3.1 =
 - Die unsichere Ausgabe von HTML aus allen Feldern jetzt escaped (thx 123Haynes!)
 

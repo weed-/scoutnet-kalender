@@ -209,10 +209,14 @@ class tx_shscoutnetwebservice_jsonRPCClient {
 		
 		// final checks and return
 		if (!$this->notification) {
-//			echo json_encode($response);
+		// echo json_encode($response);
 			// check
 			if ($response['id'] != $currentId) {
-				throw new Exception('Incorrect response id (request id: '.$currentId.', response id: '.$response['id'].')');
+				// Frueher: WordPress macht aus dem http 500 eine leere Seite ohne Hinweis.
+				// throw new Exception('Incorrect response id (request id: '.$currentId.', response id: '.$response['id'].')');
+
+				// Besser: Im return() eine moeglichst hilfreiche Antwort ausgeben. Dann bleibt die Seite im Editor bearbeitbar.
+				echo json_encode("<span style='color:red'>Leere Antwort erhalten, bist du sicher das die eingestellte Kalender-ID vorhanden ist?</span>", JSON_UNESCAPED_SLASHES);
 			}
 			if (!is_null($response['error'])) {
 				throw new Exception('Request error: '.$response['error']);
